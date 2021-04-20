@@ -1,0 +1,155 @@
+package com.project.userApiProject;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.sql.*;
+
+public class UserRepository {
+
+	public Connection getconnection() {
+		Connection con = null;
+		String url = "jdbc:mysql://localhost:3307/userapiproject?serverTimezone=UTC";
+		String username = "root";
+		String password = "";
+		
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			con = DriverManager.getConnection(url,username,password);
+		}
+		catch (Exception e){
+			System.out.println(e);
+		}
+		System.out.println("success");
+		return con;
+	}
+	
+	List<User> user;
+	public UserRepository() {
+		
+		
+		
+		user = new ArrayList<>();
+		
+		User u1 = new User();
+		u1.setFname("Nuwan");
+		u1.setLname("Perera");
+		u1.setAddress("02,Kandy Road, Malabe");
+		u1.setEmail("nuwan@gmail.com");
+		u1.setContact(712345678);
+		u1.setUsername("nuwan");
+		u1.setPassword("1111");
+		
+		user.add(u1);
+
+	}
+	
+	public List<User> getAllUsers(){
+		
+		return user;
+	}
+	
+	public User createUser(User u1) {
+		String insertSql = "INSERT INTO `users`(`id`,`fname`, `lname`, `address`, `email`, `contact`, `username`, `password`) VALUES (?,?,?,?,?,?,?,?)";
+		Connection con = getconnection();
+		try {
+			PreparedStatement st = con.prepareStatement(insertSql);
+			
+			st.setInt(1, 0);
+			st.setString(2, u1.fname);
+			st.setString(3, u1.lname);
+			st.setString(4, u1.address);
+			st.setString(5, u1.email);
+			st.setInt(6, u1.contact);
+			st.setString(7, u1.username);
+			st.setString(8, u1.password);
+			
+			String output = "Inserted successfully"; 
+			
+			st.executeUpdate();
+		}
+		catch (Exception e){
+			System.out.println(e);
+		}
+		
+		
+		user.add(u1);
+		System.out.println(user);
+		return u1;
+	}
+
+	public User getUserId(int id) {
+		// TODO Auto-generated method stub
+		String getsql = "SELECT * FROM `users` WHERE id = '"+id+"' ";
+		User ud = new User();
+		Connection con = getconnection();
+		
+		try {
+			Statement st = con.createStatement();
+			ResultSet u1 = st.executeQuery(getsql);
+			
+			while(u1.next()) {
+				
+				ud.setId(u1.getInt(1));
+				ud.setFname(u1.getString(2));
+				ud.setLname(u1.getString(3));
+				ud.setAddress(u1.getString(4));
+				ud.setEmail(u1.getString(5));
+				ud.setContact(u1.getInt(6));
+				ud.setUsername(u1.getString(7));
+				ud.setPassword(u1.getString(8));
+			}
+			
+			//con.close();
+		
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return ud;
+		
+	}
+
+	public String deleteUser(int id) {
+		// TODO Auto-generated method stub
+		String output ="";
+		try {
+			Connection con = getconnection();
+			
+			String deleteUser = "DELETE FROM `users` WHERE id = '"+id+"' ";
+			PreparedStatement ps = con.prepareStatement(deleteUser);
+			ps.execute();
+			
+			output = "Delete Successful";
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return output;
+	}
+
+	public void updateUser(User user) {
+		try {
+			Connection con = getconnection();
+			
+			String updateUser = "UPDATE `users` SET `id`= '"+user.getId()+"',`fname`='"+user.getFname()+"',`lname`='"+user.getLname()+"',`address`='"+user.getAddress()+"',`email`='"+user.getEmail()+"',`contact`='"+user.getContact()+"',`username`='"+user.getUsername()+"',`password`='"+user.getPassword()+"' WHERE id = '"+user.getId()+"' ";
+			PreparedStatement st = con.prepareStatement(updateUser);
+
+			st.executeUpdate();
+			
+			con.close();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+		
+		
+		
+		
+	
+
+	
+	
+	
+	
+}

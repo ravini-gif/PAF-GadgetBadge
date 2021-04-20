@@ -2,6 +2,8 @@ package com.project.userApiProject;
 
 public class User {
 
+	public int  id;
+	
 	public String fname;
 	public String lname;
 	public String address;
@@ -10,6 +12,12 @@ public class User {
 	public String username;
 	public String password;
 	
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
 	public String getFname() {
 		return fname;
 	}
@@ -40,7 +48,12 @@ public class User {
 	public void setContact(int contact) {
 		this.contact = contact;
 	}
-	public String getUsername() {
+		@Override
+	public String toString() {
+		return "User [id=" + id + ", fname=" + fname + ", lname=" + lname + ", address=" + address + ", email=" + email
+				+ ", contact=" + contact + ", username=" + username + ", password=" + password + "]";
+	}
+		public String getUsername() {
 		return username;
 	}
 	public void setUsername(String username) {
