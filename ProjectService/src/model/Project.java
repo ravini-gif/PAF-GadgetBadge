@@ -89,6 +89,12 @@ public class Project {
 				output += "<td>" + requiredfund + "</td>"; 
 				output += "<td>" + projectduration + "</td>"; 
 				
+				output += "<td><input name='btnUpdate' type='button' value='Update' "
+						+ "class='btn btn-secondary'></td>"
+						+ "<td>"
+						+ "<input name='btnRemove' type='submit' value='Remove'"
+						+ "  class='btn btn-danger'>" 
+						+ "</form></td></tr>";
 			}
 			
 			con.close();
