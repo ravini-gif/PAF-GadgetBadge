@@ -61,10 +61,10 @@ public class UserResource {
 	@Path("/updateUser")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.TEXT_PLAIN)
-	public String updateUser(User details) 
+	public String updateUser(User u1) 
 	{ 
 	
-	 return "Updated Successfully";
+	 return ur.updateUser(u1);
 	}
 	@GET
 	@Path("/")

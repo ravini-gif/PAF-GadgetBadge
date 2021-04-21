@@ -8,7 +8,7 @@ public class UserRepository {
 
 	public Connection getconnection() {
 		Connection con = null;
-		String url = "jdbc:mysql://localhost:3307/userapiproject?serverTimezone=UTC";
+		String url = "jdbc:mysql://localhost:3306/userapiproject";
 		String username = "root";
 		String password = "";
 		
@@ -49,7 +49,7 @@ public class UserRepository {
 	}
 	
 	public User createUser(User u1) {
-		String insertSql = "INSERT INTO `users`(`id`,`fname`, `lname`, `address`, `email`, `contact`, `username`, `password`) VALUES (?,?,?,?,?,?,?,?)";
+		String insertSql = "INSERT INTO `users`(`id`, `fname`, `lname`, `address`, `email`, `contact`, `username`, `password`) VALUES (?,?,?,?,?,?,?,?)";
 		Connection con = getconnection();
 		try {
 			PreparedStatement st = con.prepareStatement(insertSql);
@@ -69,6 +69,7 @@ public class UserRepository {
 		}
 		catch (Exception e){
 			System.out.println(e);
+			String output = "Error";
 		}
 		
 		
@@ -127,19 +128,22 @@ public class UserRepository {
 		return output;
 	}
 
-	public void updateUser(User user) {
+	public String updateUser(User user) {
+		String output ="";
 		try {
 			Connection con = getconnection();
 			
-			String updateUser = "UPDATE `users` SET `id`= '"+user.getId()+"',`fname`='"+user.getFname()+"',`lname`='"+user.getLname()+"',`address`='"+user.getAddress()+"',`email`='"+user.getEmail()+"',`contact`='"+user.getContact()+"',`username`='"+user.getUsername()+"',`password`='"+user.getPassword()+"' WHERE id = '"+user.getId()+"' ";
+			String updateUser = "UPDATE `users` SET `id`='"+user.getId()+"',`fname`='"+user.getFname()+"',`lname`='"+user.getLname()+"',`address`='"+user.getAddress()+"',`email`='"+user.getEmail()+"',`contact`='"+user.getContact()+"',`username`='"+user.getUsername()+"',`password`='"+user.getPassword()+"' WHERE `id`='"+user.getId()+"' ";
 			PreparedStatement st = con.prepareStatement(updateUser);
 
 			st.executeUpdate();
-			
+			output = "Update Successfully";
 			con.close();
 		}catch(SQLException e) {
 			e.printStackTrace();
+			output = "Error";
 		}
+		return output;
 	}
 	
 		
