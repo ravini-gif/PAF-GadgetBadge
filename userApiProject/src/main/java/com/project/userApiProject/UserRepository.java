@@ -150,6 +150,63 @@ public class UserRepository {
 		
 		
 		
+	public String readUsers() 
+	 { 
+	 String output = ""; 
+	 try
+	 { 
+	 Connection con = getconnection(); 
+	 
+	 // Prepare the html table to be displayed
+	 output = "<table border='1'><tr><th>User ID</th>" +
+	 "<th>first Name </th>" + 
+	 "<th>Last Name</th>" +
+	 "<th>Address</th>" +
+	 "<th>Email</th>" +
+	 "<th>Contact No</th>" +
+	 "<th>Username</th>" +
+	 "<th>Password</th>" +
+	 "<th>Update</th><th>Remove</th></tr>"; 
+	 
+	 String query = "SELECT * FROM `users`"; 
+	 Statement stmt = con.createStatement(); 
+	 ResultSet rs = stmt.executeQuery(query); 
+	 // iterate through the rows in the result set
+	 while (rs.next()) 
+	 { 
+	 String id = Integer.toString(rs.getInt("id")); 
+	 String fname = rs.getString("fname"); 
+	 String lname = rs.getString("lname"); 
+	 String address = rs.getString("address"); 
+	 String email = rs.getString("email"); 
+	 String contact = Integer.toString(rs.getInt("contact")); 
+	 String username = rs.getString("username"); 
+	 String password = rs.getString("password"); 
+	
+	 // Add into the html table
+	 output += "<tr><td>" + id + "</td>"; 
+	 output += "<td>" + fname + "</td>"; 
+	 output += "<td>" + lname + "</td>"; 
+	 output += "<td>" + address + "</td>"; 
+	 output += "<td>" + email + "</td>"; 
+	 output += "<td>" + contact + "</td>"; 
+	 output += "<td>" + username + "</td>"; 
+	 output += "<td>" + password + "</td>"; 
+	 // buttons
+	 output += "<td><input name='btnUpdate' type='button' value='Update' class='btn btn-secondary'></td>"+ "<td><form method='post' action='items.jsp'>"+ "<input name='btnRemove' type='submit' value='Remove' class='btn btn-danger'>"+ "<input name='itemID' type='hidden' value='" + id + "'>" + "</form></td></tr>"; 
+	 } 
+	 con.close(); 
+	 // Complete the html table
+	 output += "</table>"; 
+	 } 
+	 catch (Exception e) 
+	 { 
+	 output = "Error while reading the items."; 
+	 System.err.println(e.getMessage()); 
+	 } 
+	 return output; 
+	 }
+
 	
 
 	

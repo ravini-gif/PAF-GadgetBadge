@@ -23,12 +23,12 @@ public class UserResource {
 	UserRepository ur = new UserRepository();
 	
 	
-	@GET
-	@Produces(MediaType.APPLICATION_JSON)
-	public List<User> getAllUsers() {
+	//@GET
+	//@Produces(MediaType.APPLICATION_JSON)
+	//public List<User> getAllUsers() {
 	
-		return ur.getAllUsers();
-	}
+	//	return ur.getAllUsers();
+	//}
 	
 	@POST
 	@Path("/user")
@@ -39,16 +39,16 @@ public class UserResource {
 	}
 	
 
-	@GET
-	@Path("/user/{id}")
-	@Produces(MediaType.APPLICATION_JSON)
-	public String getUser(@PathParam("id") String id) {
-		User res = new User();
-		res = ur.getUserId(Integer.parseInt(id));
-		Gson test = new Gson();
-		String jsonObject = test.toJson(res);
-		return jsonObject;
-	}
+	//@GET
+	//@Path("/user/{id}")
+	//@Produces(MediaType.APPLICATION_JSON)
+	//public String getUser(@PathParam("id") String id) {
+	//	User res = new User();
+	//	res = ur.getUserId(Integer.parseInt(id));
+	//	Gson test = new Gson();
+	//	String jsonObject = test.toJson(res);
+	//	return jsonObject;
+	//}
 	
 	@DELETE
 	@Path("/deleteUser/{id}")
@@ -66,12 +66,14 @@ public class UserResource {
 	
 	 return ur.updateUser(u1);
 	}
+	
+	UserRepository userObj = new UserRepository(); 
 	@GET
-	@Path("/")
-	@Produces(MediaType.APPLICATION_JSON)
-	public List<User> getallUsers() {
-		
-		return ur.getAllUsers();
-	}
+	@Path("/User")
+	@Produces(MediaType.TEXT_HTML)
+	public String readItems()
+	 {
+		return userObj.readUsers();
+	 } 
 	
 }
