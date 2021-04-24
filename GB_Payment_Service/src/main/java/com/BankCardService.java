@@ -23,7 +23,7 @@ public class BankCardService {
 	@Path("/")
 	@Produces(MediaType.TEXT_PLAIN)
 	public String readAllbankCards() {
-		
+		System.out.println("Inside get");
 		return card.readBankcards();
 	}
 	
