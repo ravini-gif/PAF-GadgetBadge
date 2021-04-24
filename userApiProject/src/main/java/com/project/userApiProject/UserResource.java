@@ -3,8 +3,10 @@ package com.project.userApiProject;
 import java.util.ArrayList;
 import java.util.List;
 
+//for json
 import com.google.gson.Gson;
 
+//for REST service
 import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
@@ -39,16 +41,16 @@ public class UserResource {
 	}
 	
 
-	//@GET
-	//@Path("/user/{id}")
-	//@Produces(MediaType.APPLICATION_JSON)
-	//public String getUser(@PathParam("id") String id) {
-	//	User res = new User();
-	//	res = ur.getUserId(Integer.parseInt(id));
-	//	Gson test = new Gson();
-	//	String jsonObject = test.toJson(res);
-	//	return jsonObject;
-	//}
+	@GET
+	@Path("/user/{id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public String getUser(@PathParam("id") String id) {
+		User res = new User();
+	res = ur.getUserId(Integer.parseInt(id));
+	Gson test = new Gson();
+	String jsonObject = test.toJson(res);
+	return jsonObject;
+	}
 	
 	@DELETE
 	@Path("/deleteUser/{id}")

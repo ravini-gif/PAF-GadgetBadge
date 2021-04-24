@@ -5,9 +5,12 @@ import java.util.List;
 import java.sql.*;
 
 public class UserRepository {
-
+	//connect to the database
+	
 	public Connection getconnection() {
 		Connection con = null;
+		
+		//Provide the correct details: DBServer/DBName, username, password
 		String url = "jdbc:mysql://localhost:3306/userapiproject";
 		String username = "root";
 		String password = "";
@@ -49,11 +52,15 @@ public class UserRepository {
 	}
 	
 	public User createUser(User u1) {
+		
+		// create a prepared statement
+
 		String insertSql = "INSERT INTO `users`(`id`, `fname`, `lname`, `address`, `email`, `contact`, `username`, `password`) VALUES (?,?,?,?,?,?,?,?)";
 		Connection con = getconnection();
 		try {
 			PreparedStatement st = con.prepareStatement(insertSql);
 			
+			// binding values
 			st.setInt(1, 0);
 			st.setString(2, u1.fname);
 			st.setString(3, u1.lname);
@@ -65,6 +72,7 @@ public class UserRepository {
 			
 			String output = "Inserted successfully"; 
 			
+			// execute the statement
 			st.executeUpdate();
 		}
 		catch (Exception e){
@@ -79,7 +87,8 @@ public class UserRepository {
 	}
 
 	public User getUserId(int id) {
-		// TODO Auto-generated method stub
+
+		//read data from the database
 		String getsql = "SELECT * FROM `users` WHERE id = '"+id+"' ";
 		User ud = new User();
 		Connection con = getconnection();
@@ -100,10 +109,9 @@ public class UserRepository {
 				ud.setPassword(u1.getString(8));
 			}
 			
-			//con.close();
 		
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		}
 		return ud;
@@ -111,11 +119,12 @@ public class UserRepository {
 	}
 
 	public String deleteUser(int id) {
-		// TODO Auto-generated method stub
+
 		String output ="";
 		try {
 			Connection con = getconnection();
 			
+			// create a prepared statement
 			String deleteUser = "DELETE FROM `users` WHERE id = '"+id+"' ";
 			PreparedStatement ps = con.prepareStatement(deleteUser);
 			ps.execute();
@@ -133,9 +142,12 @@ public class UserRepository {
 		try {
 			Connection con = getconnection();
 			
+			// create a prepared statement
+
 			String updateUser = "UPDATE `users` SET `id`='"+user.getId()+"',`fname`='"+user.getFname()+"',`lname`='"+user.getLname()+"',`address`='"+user.getAddress()+"',`email`='"+user.getEmail()+"',`contact`='"+user.getContact()+"',`username`='"+user.getUsername()+"',`password`='"+user.getPassword()+"' WHERE `id`='"+user.getId()+"' ";
 			PreparedStatement st = con.prepareStatement(updateUser);
 
+			// execute the statement
 			st.executeUpdate();
 			output = "Update Successfully";
 			con.close();
