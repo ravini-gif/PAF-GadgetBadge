@@ -1,36 +1,81 @@
 package com.project.userApiProject;
 
-import jakarta.ws.rs.Path;
-
 import java.util.ArrayList;
 import java.util.List;
 
+//for json
+import com.google.gson.Gson;
+
+//for REST service
+import jakarta.ws.rs.DELETE;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.PathParam;
+import jakarta.ws.rs.POST;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.PUT;
 
 
 @Path("/users")
 public class UserResource {
 
-	@GET
-	@Produces(MediaType.APPLICATION_JSON)
-	public List<User> getAllUser() {
+	
+	UserRepository ur = new UserRepository();
+	
+	
+	//@GET
+	//@Produces(MediaType.APPLICATION_JSON)
+	//public List<User> getAllUsers() {
+	
+	//	return ur.getAllUsers();
+	//}
+	
+	@POST
+	@Path("/user")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public User addUser(User u1) {
 		
-		List<User> user = new ArrayList<User>();
-		
-		User u1 = new User();
-		u1.setFname("Nuwan");
-		u1.setLname("Perera");
-		u1.setAddress("02,Kandy Road, Malabe");
-		u1.setEmail("nuwan@gmail.com");
-		u1.setContact(712345678);
-		u1.setUsername("nuwan");
-		u1.setPassword("1111");
-		
-		user.add(u1);
-		
-		return user;
+		return ur.createUser(u1);
 	}
+	
+
+	@GET
+	@Path("/user/{id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public String getUser(@PathParam("id") String id) {
+		User res = new User();
+	res = ur.getUserId(Integer.parseInt(id));
+	Gson test = new Gson();
+	String jsonObject = test.toJson(res);
+	return jsonObject;
+	}
+	
+	@DELETE
+	@Path("/deleteUser/{id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public String deleteuser(@PathParam("id") int id) {
+		return ur.deleteUser(id);
+	}
+	
+	@PUT
+	@Path("/updateUser")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.TEXT_PLAIN)
+	public String updateUser(User u1) 
+	{ 
+	
+	 return ur.updateUser(u1);
+	}
+	
+	UserRepository userObj = new UserRepository(); 
+	@GET
+	@Path("/User")
+	@Produces(MediaType.TEXT_HTML)
+	public String readItems()
+	 {
+		return userObj.readUsers();
+	 } 
 	
 }
